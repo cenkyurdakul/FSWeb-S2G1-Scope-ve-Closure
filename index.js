@@ -30,10 +30,14 @@ console.log('örnek görev:', ilkiniDon(['as','sa'],function(metin){return metin
   Aşağıdaki skor1 ve skor2 kodlarını inceleyiniz ve aşağıdaki soruları altına not alarak cevaplayın
   
   1. skor1 ve skor2 arasındaki fark nedir?
+    skor1 (skorArttirici), içindeki skor tanımı, sadece o fonskiyonda tanımlı olduğu için, her çağrıldığında 0 değerini alacaktır ve onu 1 arttıracaktır.
+    Ama sko2'ye baktığımız zaman, skor değişkeni, global scopta olduğu için, skor2 her çağırıldığında, skor değeri 1 artacaktır. yani 3 kere skor2 çağırılırsa skor değeri 2 olacaktır.
   
   2. Hangisi bir closure kullanmaktadır? Nasıl tarif edebilirsin? (yarınki derste öğreneceksin :) )
-  
+    skor1'de closure bulunmaktadır. skor değişkeni, global scopeta yer almadığı için, fonksiyon dışında tanımlı olmayacaktır.
+
   3. Hangi durumda skor1 tercih edilebilir? Hangi durumda skor2 daha mantıklıdır?
+
 */
 
 // skor1 kodları
@@ -46,12 +50,14 @@ function skorArtirici() {
 
 const skor1 = skorArtirici();
 
+
 // skor2 kodları
 let skor = 0;
 
 function skor2() {
   return skor++;
 }
+
 
 
 /* Görev 2: takimSkoru() 
@@ -64,9 +70,11 @@ Aşağıdaki takimSkoru() fonksiyonununda aşağıdakileri yapınız:
 Not: Bu fonskiyon, aşağıdaki diğer görevler için de bir callback fonksiyonu olarak da kullanılacak
 */
 
-function takimSkoru(/*Kodunuzu buraya yazınız*/){
-    /*Kodunuzu buraya yazınız*/
+function takimSkoru(){
+  const sonuc = Math.floor(Math.random() * (25 - 10) + 10);
+  return sonuc  // 
 }
+console.log(takimSkoru())
 
 
 
@@ -86,10 +94,36 @@ Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
 }
 */ 
 
-function macSonucu(/*Kodunuzu buraya yazınız*/){
-  /*Kodunuzu buraya yazınız*/
-}
 
+function macSonucu(callback , ceyrekSayisi){
+  let Takım1Skor = 0
+  let Takım2Skor = 0
+ for (let i = 0 ; i < ceyrekSayisi ; i = i + 1){
+  let ceyrekSkor1 = 0
+  let ceyrekSkor2 = 0
+
+  ceyrekSkor1 = callback()
+  ceyrekSkor2 = callback()
+
+    Takım1Skor = Takım1Skor + ceyrekSkor1;
+    Takım2Skor = Takım2Skor + ceyrekSkor2;
+
+ }  
+
+ let maçSonu = {
+  "EvSahibi": Takım1Skor ,
+  "KonukTakim": Takım2Skor
+ }
+  return maçSonu
+}
+console.log("görev 3:" , macSonucu(takimSkoru, 4)) 
+/*let toplam = 0 
+for (let i = 1 ; i < 10 ; i = i + 1){
+  toplam = toplam + i
+  console.log(toplam)
+
+}
+console.log (toplam)*/
 
 
 
@@ -109,11 +143,27 @@ Aşağıdaki periyotSkoru() fonksiyonununda aşağıdakileri yapınız:
   */
 
 
-function periyotSkoru(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
+function periyotSkoru(callback) {
+  let Takım1Skor = 0
+  let Takım2Skor = 0
 
+  let ceyrekSkor1 = 0
+  let ceyrekSkor2 = 0
+
+  ceyrekSkor1 = callback()
+  ceyrekSkor2 = callback()
+
+    Takım1Skor = Takım1Skor + ceyrekSkor1;
+    Takım2Skor = Takım2Skor + ceyrekSkor2;
+  
+
+ let periyotSonu = {
+  "EvSahibi": Takım1Skor ,
+  "KonukTakim": Takım2Skor
+ }
+ return periyotSonu
 }
-
+console.log("görev 4: " , periyotSkoru(takimSkoru))
 
 /* Zorlayıcı Görev 5: skorTabelasi() 
 Aşağıdaki skorTabelasi() fonksiyonunu kullanarak aşağıdakileri yapınız:
